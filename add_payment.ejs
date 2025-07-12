@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Payment | E-commerce System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            background-color: #f4f6f9;
+            color: #333;
+        }
+
+        .navbar {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .navbar .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+        }
+
+        .navbar h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .navbar a {
+            color: #ecf0f1;
+            text-decoration: none;
+            margin-left: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #3498db;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 2rem auto;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .container h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #34495e;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        button {
+            margin-top: 1.5rem;
+            padding: 0.75rem;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 1rem;
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <h1>E-commerce System</h1>
+            <div>
+                <a href="/">Home</a>
+                <a href="/add_customer">Add Customer</a>
+                <a href="/add_address">Add Address</a>
+                <a href="/add_seller">Add Seller</a>
+                <a href="/add_category">Add Category</a>
+                <a href="/add_product">Add Product</a>
+                <a href="/add_cart">Add Cart</a>
+                <a href="/place_order">Place Order</a>
+                <a href="/add_payment">Add Payment</a>
+                <a href="/add_review">Add Review</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <h1>Add Payment</h1>
+        <form method="POST" action="/add_payment">
+            <label for="payment_id">Payment ID:</label>
+            <input type="number" id="payment_id" name="payment_id" required>
+            
+            <label for="order_id">Select Order:</label>
+            <select id="order_id" name="order_id" required>
+                <% orders.forEach(order => { %>
+                    <option value="<%= order.OrderId %>">Order <%= order.OrderNumber %></option>
+                <% }) %>
+            </select>
+            
+            <label for="payment_mode">Payment Mode:</label>
+            <select id="payment_mode" name="payment_mode" required>
+                <option value="Credit Card">Credit Card</option>
+                <option value="Debit Card">Debit Card</option>
+                <option value="Net Banking">Net Banking</option>
+                <option value="Cash on Delivery">Cash on Delivery</option>
+                <option value="UPI">UPI</option>
+            </select>
+            
+            <label for="customer_id">Select Customer:</label>
+            <select id="customer_id" name="customer_id" required>
+                <% customers.forEach(customer => { %>
+                    <option value="<%= customer.CustomerId %>"><%= customer.FirstName %> <%= customer.LastName %></option>
+                <% }) %>
+            </select>
+            
+            <label for="date_of_payment">Date of Payment:</label>
+            <input type="datetime-local" id="date_of_payment" name="date_of_payment" required>
+            
+            <button type="submit">Submit Payment</button>
+        </form>
+        <a href="/" class="back-link">← Back to Home</a>
+    </div>
+</body>
+</html>

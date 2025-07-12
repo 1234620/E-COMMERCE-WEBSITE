@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Review | E-commerce System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            background-color: #f4f6f9;
+            color: #333;
+        }
+
+        .navbar {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .navbar .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+        }
+
+        .navbar h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .navbar a {
+            color: #ecf0f1;
+            text-decoration: none;
+            margin-left: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #3498db;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 2rem auto;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .container h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #34495e;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        /* Custom styling for ratings */
+        select[name="ratings"] {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M1 4l5 5 5-5' fill='none' stroke='%23888' stroke-width='2'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.7rem top 50%;
+            padding-right: 2rem;
+        }
+
+        button {
+            margin-top: 1.5rem;
+            padding: 0.75rem;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 1rem;
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #2980b9;
+        }
+
+        /* Star rating visualization */
+        .star-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .star-rating span {
+            color: #bdc3c7;
+            font-size: 1.5rem;
+            margin-right: 0.25rem;
+            transition: color 0.3s ease;
+        }
+
+        .star-rating span.active {
+            color: #f1c40f;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <h1>E-commerce System</h1>
+            <div>
+                <a href="/">Home</a>
+                <a href="/add_customer">Add Customer</a>
+                <a href="/add_address">Add Address</a>
+                <a href="/add_seller">Add Seller</a>
+                <a href="/add_category">Add Category</a>
+                <a href="/add_product">Add Product</a>
+                <a href="/add_cart">Add Cart</a>
+                <a href="/place_order">Place Order</a>
+                <a href="/add_payment">Add Payment</a>
+                <a href="/add_review">Add Review</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <h1>Add Review</h1>
+        <form method="POST" action="/add_review">
+            <label for="review_id">Review ID:</label>
+            <input type="number" id="review_id" name="review_id" required>
+            
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" required placeholder="Write your review here...">
+            
+            <label for="ratings">Ratings:</label>
+            <select id="ratings" name="ratings" required>
+                <option value="1">1 Star</option>
+                <option value="2">2 Stars</option>
+                <option value="3">3 Stars</option>
+                <option value="4">4 Stars</option>
+                <option value="5">5 Stars</option>
+            </select>
+            
+            <label for="product_id">Select Product:</label>
+            <select id="product_id" name="product_id" required>
+                <% products.forEach(product => { %>
+                    <option value="<%= product.ProductId %>"><%= product.ProductName %></option>
+                <% }) %>
+            </select>
+            
+            <label for="customer_id">Select Customer:</label>
+            <select id="customer_id" name="customer_id" required>
+                <% customers.forEach(customer => { %>
+                    <option value="<%= customer.CustomerId %>"><%= customer.FirstName %> <%= customer.LastName %></option>
+                <% }) %>
+            </select>
+            
+            <button type="submit">Submit Review</button>
+        </form>
+        <a href="/" class="back-link">← Back to Home</a>
+    </div>
+</body>
+</html>
